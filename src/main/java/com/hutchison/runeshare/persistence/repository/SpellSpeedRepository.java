@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpellSpeedRepository extends JpaRepository<SpellSpeed, Long> {
+    SpellSpeed findByNameRef(String spellSpeedRef);
 }

@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class Keyword implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false) //, columnDefinition = "id BIGINT NOT NULL AUTOINCREMENT")
+    @Column(name = "id", unique = true, nullable = false)
     Long id;
     @Column(name = "description", nullable = false)
     final String description;

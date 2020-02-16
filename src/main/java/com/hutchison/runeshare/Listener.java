@@ -26,10 +26,10 @@ public class Listener extends ListenerAdapter implements EventListener {
     }
 
     void listen() throws LoginException {
-        JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
-        jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XjjzVA.msOoJWmdqZpm0Jg26dB74cFQi0M");
-        jdaBuilder.addEventListeners(new Listener(dbLoader));
-        jdaBuilder.build();
+//        JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
+//        jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XjjzVA.msOoJWmdqZpm0Jg26dB74cFQi0M");
+//        jdaBuilder.addEventListeners(new Listener(dbLoader));
+//        jdaBuilder.build();
     }
 
     @Override
