@@ -15,12 +15,8 @@ import javax.security.auth.login.LoginException;
 @EntityScan( basePackages = {"com.hutchison.runeshare"})
 public class RuneshareApplication {
 
-    @Autowired
-    static Listener listener;
-
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) {
         SpringApplication.run(RuneshareApplication.class, args);
-        listener.listen();
     }
 
 }
