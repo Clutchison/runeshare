@@ -1,15 +1,14 @@
 package com.hutchison.runeshare.persistence.entity;
 
+import com.hutchison.runeshare.model.dto.AssetsDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@Getter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "ASSETS")
@@ -28,7 +27,7 @@ public class Assets {
         this.fullAbsolutePath = fullAbsolutePath;
     }
 
-    public static Assets fromDto(Assets dto) {
+    public static Assets fromDto(AssetsDto dto) {
         return new Assets(
                 dto.getGameAbsolutePath(),
                 dto.getFullAbsolutePath()

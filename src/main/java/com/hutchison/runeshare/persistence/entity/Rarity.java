@@ -6,11 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@Getter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "RARITY")
@@ -20,9 +18,9 @@ public class Rarity {
     @Column(name = "id", unique = true, nullable = false)
     Long id;
     @Column(name = "name", nullable = false)
-    final String name;
+    String name;
     @Column(name = "name_ref", unique = true, nullable = false)
-    final String nameRef;
+    String nameRef;
 
     public Rarity(String name, String nameRef) {
         this.name = name;

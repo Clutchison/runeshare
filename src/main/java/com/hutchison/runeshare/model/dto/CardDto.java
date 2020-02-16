@@ -14,7 +14,7 @@ import java.util.List;
 public class CardDto {
     List<CardDto> associatedCards;
     List<String> associatedCardRefs;
-    Assets assets;
+    List<AssetsDto> assets;
     String Region;
     String RegionRef;
     Integer attack;

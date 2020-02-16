@@ -6,11 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode
-@ToString
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Getter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "SPELL_SPEED")
@@ -20,9 +18,9 @@ public class SpellSpeed {
     @Column(name = "id", unique = true, nullable = false)
     Long id;
     @Column(name = "name", nullable = false)
-    final String name;
+    String name;
     @Column(name = "name_ref", nullable = false, unique = true)
-    final String nameRef;
+    String nameRef;
 
     public SpellSpeed(String name, String nameRef) {
         this.name = name;

@@ -8,11 +8,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@EqualsAndHashCode
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-@Getter
 
 @Entity
 @Table(name = "CARD")

@@ -7,11 +7,9 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@EqualsAndHashCode
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@Getter
+@Data
+@NoArgsConstructor
 
 @Entity
 @Table(name = "KEYWORD")
@@ -21,11 +19,11 @@ public class Keyword implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     Long id;
     @Column(name = "description", nullable = false)
-    final String description;
+    String description;
     @Column(name = "name", nullable = false)
-    final String name;
+    String name;
     @Column(name = "name_ref", unique = true, nullable = false)
-    final String nameRef;
+    String nameRef;
 
     public Keyword(String description, String name, String nameRef) {
         this.description = description;

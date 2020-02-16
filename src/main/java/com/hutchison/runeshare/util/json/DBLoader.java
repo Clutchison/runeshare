@@ -4,10 +4,9 @@ import com.hutchison.runeshare.persistence.entity.Keyword;
 import com.hutchison.runeshare.persistence.entity.Rarity;
 import com.hutchison.runeshare.persistence.entity.Region;
 import com.hutchison.runeshare.persistence.entity.SpellSpeed;
-import com.hutchison.runeshare.persistence.repository.KeywordRepository;
-import com.hutchison.runeshare.persistence.repository.RarityRepository;
-import com.hutchison.runeshare.persistence.repository.RegionRepository;
-import com.hutchison.runeshare.persistence.repository.SpellSpeedRepository;
+import com.hutchison.runeshare.persistence.entity.card.Card;
+import com.hutchison.runeshare.persistence.entity.card.CardFactory;
+import com.hutchison.runeshare.persistence.repository.*;
 import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,33 +25,41 @@ public class DBLoader {
     RarityRepository rarityRepository;
     RegionRepository regionRepository;
     SpellSpeedRepository spellSpeedRepository;
+    CardRepository cardRepository;
+    AssetsRepository assetsRepository;
+
+    CardFactory cardFactory;
 
     @Autowired
     public DBLoader(
             KeywordRepository keywordRepository,
             RarityRepository rarityRepository,
             RegionRepository regionRepository,
-            SpellSpeedRepository spellSpeedRepository
+            SpellSpeedRepository spellSpeedRepository,
+            CardRepository cardRepository,
+            AssetsRepository assetsRepository,
+            CardFactory cardFactory
     ) {
         this.keywordRepository = keywordRepository;
         this.rarityRepository = rarityRepository;
         this.regionRepository = regionRepository;
         this.spellSpeedRepository = spellSpeedRepository;
+        this.cardRepository = cardRepository;
+        this.assetsRepository = assetsRepository;
         repositories = Arrays.asList(
                 keywordRepository,
                 rarityRepository,
                 regionRepository,
-                spellSpeedRepository
+                spellSpeedRepository,
+                cardRepository
         );
+        this.cardFactory = cardFactory;
     }
 
     public void load() {
         repositories.forEach(JpaRepository::deleteAllInBatch);
         CoreInput coreInput = JsonReader.readCoreInput();
-        //        KeywordDto dto = new ObjectMapper().convertValue(keywords.get(0), KeywordDto.class);
-//        Keyword keyword = Keyword.fromDto(dto);
-//        Keyword entity = new Keyword(keyword.getDescription(), keyword.getName(), keyword.getNameRef());
-        //        collect.forEach(keywordRepository::save);
+        SetInput setInput = JsonReader.readSetInput();
         keywordRepository.saveAll(coreInput.getKeywords().stream()
                 .map(Keyword::fromDto)
                 .collect(Collectors.toList()));
@@ -65,5 +72,9 @@ public class DBLoader {
         spellSpeedRepository.saveAll(coreInput.getSpellSpeeds().stream()
                 .map(SpellSpeed::fromDto)
                 .collect(Collectors.toList()));
+        List<Card> collect = setInput.getCards().stream()
+                .map(cardFactory::fromDto)
+                .collect(Collectors.toList());
+        cardRepository.saveAll(collect);
     }
 }

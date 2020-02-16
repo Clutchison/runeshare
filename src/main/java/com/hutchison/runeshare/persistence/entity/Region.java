@@ -1,16 +1,17 @@
 package com.hutchison.runeshare.persistence.entity;
 
 import com.hutchison.runeshare.model.dto.RegionDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode
-@ToString
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Getter
+@Data
+@NoArgsConstructor
+
 @Entity
 @Table(name = "REGION")
 public class Region {
@@ -20,13 +21,13 @@ public class Region {
     Long id;
 
     @Column(name = "abbreviation", nullable = false)
-    final String abbreviation;
+    String abbreviation;
     @Column(name = "icon_absolute_path", nullable = false)
-    final String iconAbsolutePath;
+    String iconAbsolutePath;
     @Column(name = "name", nullable = false)
-    final String name;
+    String name;
     @Column(name = "name_ref", nullable = false, unique = true)
-    final String nameRef;
+    String nameRef;
 
     public Region(String abbreviation, String iconAbsolutePath, String name, String nameRef) {
         this.abbreviation = abbreviation;

@@ -11,6 +11,6 @@ import java.util.Set;
 
 @Repository
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
-    @Query("SELECT k from Keyword k WHERE k.nameRef IN keyword_refs")
+    @Query("SELECT k from Keyword k WHERE k.nameRef IN :keyword_refs")
     Set<Keyword> findAllByNameRef(@Param(value = "keyword_refs") List<String> keywordRefs);
 }

@@ -33,7 +33,7 @@ public class CardFactory {
 
     public Card fromDto(CardDto dto) {
         Set<Card> associatedCards = new HashSet<>();
-        Assets assets = assetsRepository.save(Assets.fromDto(dto.getAssets()));
+        Assets assets = Assets.fromDto(dto.getAssets().get(0));
         Region region = regionRepository.findByNameRef(dto.getRegionRef());
         Set<Keyword> keywords = keywordRepository.findAllByNameRef(dto.getKeywordRefs());
         SpellSpeed spellSpeed = dto.getSpellSpeedRef() == null ? null : spellSpeedRepository.findByNameRef(dto.getSpellSpeedRef());
