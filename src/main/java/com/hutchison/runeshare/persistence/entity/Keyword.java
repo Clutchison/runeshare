@@ -1,7 +1,9 @@
 package com.hutchison.runeshare.persistence.entity;
 
 import com.hutchison.runeshare.model.dto.KeywordDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -29,6 +31,10 @@ public class Keyword implements Serializable {
         this.description = description;
         this.name = name;
         this.nameRef = nameRef;
+    }
+
+    public Keyword(Long id) {
+        this.id = id;
     }
 
     public static Keyword fromDto(KeywordDto dto) {

@@ -58,7 +58,7 @@ public class Card implements Serializable {
     String name;
     @Column(name = "cardCode", unique = true, nullable = false)
     String cardCode;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "CARD_KEYWORD",
             joinColumns = @JoinColumn(name = "card_id"),
@@ -81,27 +81,27 @@ public class Card implements Serializable {
     Boolean collectible;
 
     Card(Set<Card> associatedCards,
-                Set<Card> associatedWithCards,
-                Assets assets,
-                Region region,
-                Integer attack,
-                Integer cost,
-                Integer health,
-                String description,
-                String descriptionRaw,
-                String levelUpDescription,
-                String levelUpDescriptionRaw,
-                String flavorText,
-                String artistName,
-                String name,
-                String cardCode,
-                Set<Keyword> keywords,
-                SpellSpeed spellSpeed,
-                Rarity rarity,
-                String subtype,
-                String supertype,
-                String type,
-                Boolean collectible) {
+         Set<Card> associatedWithCards,
+         Assets assets,
+         Region region,
+         Integer attack,
+         Integer cost,
+         Integer health,
+         String description,
+         String descriptionRaw,
+         String levelUpDescription,
+         String levelUpDescriptionRaw,
+         String flavorText,
+         String artistName,
+         String name,
+         String cardCode,
+         Set<Keyword> keywords,
+         SpellSpeed spellSpeed,
+         Rarity rarity,
+         String subtype,
+         String supertype,
+         String type,
+         Boolean collectible) {
         this.associatedCards = associatedCards;
         this.associatedWithCards = associatedWithCards;
         this.assets = assets;
