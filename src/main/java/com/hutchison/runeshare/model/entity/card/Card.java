@@ -1,6 +1,6 @@
-package com.hutchison.runeshare.persistence.entity.card;
+package com.hutchison.runeshare.model.entity.card;
 
-import com.hutchison.runeshare.persistence.entity.*;
+import com.hutchison.runeshare.model.entity.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

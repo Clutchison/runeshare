@@ -1,6 +1,6 @@
 package com.hutchison.runeshare.persistence.repository;
 
-import com.hutchison.runeshare.persistence.entity.Rarity;
+import com.hutchison.runeshare.model.entity.Rarity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

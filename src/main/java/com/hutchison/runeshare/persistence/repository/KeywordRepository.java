@@ -1,6 +1,6 @@
 package com.hutchison.runeshare.persistence.repository;
 
-import com.hutchison.runeshare.persistence.entity.Keyword;
+import com.hutchison.runeshare.model.entity.Keyword;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

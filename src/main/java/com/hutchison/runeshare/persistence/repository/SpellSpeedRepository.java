@@ -1,6 +1,6 @@
 package com.hutchison.runeshare.persistence.repository;
 
-import com.hutchison.runeshare.persistence.entity.SpellSpeed;
+import com.hutchison.runeshare.model.entity.SpellSpeed;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

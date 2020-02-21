@@ -1,11 +1,11 @@
 package com.hutchison.runeshare.util.json;
 
-import com.hutchison.runeshare.persistence.entity.Keyword;
-import com.hutchison.runeshare.persistence.entity.Rarity;
-import com.hutchison.runeshare.persistence.entity.Region;
-import com.hutchison.runeshare.persistence.entity.SpellSpeed;
-import com.hutchison.runeshare.persistence.entity.card.Card;
-import com.hutchison.runeshare.persistence.entity.card.CardFactory;
+import com.hutchison.runeshare.model.entity.Keyword;
+import com.hutchison.runeshare.model.entity.Rarity;
+import com.hutchison.runeshare.model.entity.Region;
+import com.hutchison.runeshare.model.entity.SpellSpeed;
+import com.hutchison.runeshare.model.entity.card.Card;
+import com.hutchison.runeshare.model.entity.card.CardFactory;
 import com.hutchison.runeshare.persistence.repository.*;
 import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;

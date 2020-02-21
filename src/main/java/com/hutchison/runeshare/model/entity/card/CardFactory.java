@@ -1,14 +1,12 @@
-package com.hutchison.runeshare.persistence.entity.card;
+package com.hutchison.runeshare.model.entity.card;
 
 import com.hutchison.runeshare.model.dto.CardDto;
-import com.hutchison.runeshare.persistence.entity.*;
+import com.hutchison.runeshare.model.entity.*;
 import com.hutchison.runeshare.persistence.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class CardFactory {

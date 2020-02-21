@@ -53,7 +53,7 @@ public class Listener extends ListenerAdapter implements EventListener {
 //                        .collect(Collectors.toSet());
 //
 //                String output = decode.getDeck().entrySet().stream()
-////                    .sorted(Comparator.comparing(es -> cards.get(es.getKey().getCardCode()).getName()))
+//                    .sorted(Comparator.comparing(es -> cards.get(es.getKey().getCardCode()).getName()))
 //                        .map(es -> es.getValue() + "x " + cardRepository.findByCardCode(es.getKey().getCardCode()).getCardCode())
 //                        .collect(Collectors.joining("\n"));
 //                event.getChannel().sendMessage(output).queue();

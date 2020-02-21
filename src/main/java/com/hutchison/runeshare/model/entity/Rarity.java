@@ -1,4 +1,4 @@
-package com.hutchison.runeshare.persistence.entity;
+package com.hutchison.runeshare.model.entity;
 
 import com.hutchison.runeshare.model.dto.RarityDto;
 import lombok.*;

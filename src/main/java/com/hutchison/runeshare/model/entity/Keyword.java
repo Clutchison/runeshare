@@ -1,7 +1,7 @@
-package com.hutchison.runeshare.persistence.entity;
+package com.hutchison.runeshare.model.entity;
 
 import com.hutchison.runeshare.model.dto.KeywordDto;
-import com.hutchison.runeshare.persistence.entity.card.Card;
+import com.hutchison.runeshare.model.entity.card.Card;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

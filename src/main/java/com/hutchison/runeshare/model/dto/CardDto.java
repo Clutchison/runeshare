@@ -2,7 +2,6 @@ package com.hutchison.runeshare.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.hutchison.runeshare.persistence.entity.Assets;
 import lombok.Builder;
 import lombok.Value;
 
