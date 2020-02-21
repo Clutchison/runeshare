@@ -1,20 +1,19 @@
-package com.hutchison.runeshare;
+package com.hutchison.runeshare.routing;
 
+import com.hutchison.runeshare.annotation.Route;
 import com.hutchison.runeshare.persistence.repository.CardRepository;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import no.stelar7.lor.LoRDeckCode;
-import no.stelar7.lor.types.LoRDeck;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.LoginException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.lang.reflect.Method;
+import java.util.Set;
 
 @Component
 public class Listener extends ListenerAdapter implements EventListener {
@@ -34,7 +33,7 @@ public class Listener extends ListenerAdapter implements EventListener {
         this.cardRepository = cardRepository;
     }
 
-    void listen() throws LoginException {
+    public void listen() throws LoginException {
         JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
         jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XjjzVA.msOoJWmdqZpm0Jg26dB74cFQi0M");
         jdaBuilder.addEventListeners(new Listener(cardRepository));
@@ -44,6 +43,9 @@ public class Listener extends ListenerAdapter implements EventListener {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
+
+
+
         if (event.getMessage().getContentRaw().startsWith("!deck")) {
             if (event.getMessage().getContentRaw().startsWith("!deck")) {
 //                List<String> args = Arrays.asList(event.getMessage().getContentRaw().split(" "));
