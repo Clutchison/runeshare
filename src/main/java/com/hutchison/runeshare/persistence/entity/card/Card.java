@@ -58,11 +58,11 @@ public class Card implements Serializable {
     String name;
     @Column(name = "cardCode", unique = true, nullable = false)
     String cardCode;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "CARD_KEYWORD",
-            joinColumns = @JoinColumn(name = "card_id"),
-            inverseJoinColumns = @JoinColumn(name = "keyword_id")
+            joinColumns = @JoinColumn(name = "CARD_id"),
+            inverseJoinColumns = @JoinColumn(name = "KEYWORD_id")
     )
     Set<Keyword> keywords;
     @ManyToOne

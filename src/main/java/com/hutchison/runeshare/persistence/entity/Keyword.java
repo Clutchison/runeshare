@@ -1,6 +1,7 @@
 package com.hutchison.runeshare.persistence.entity;
 
 import com.hutchison.runeshare.model.dto.KeywordDto;
+import com.hutchison.runeshare.persistence.entity.card.Card;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -26,6 +28,8 @@ public class Keyword implements Serializable {
     String name;
     @Column(name = "name_ref", unique = true, nullable = false)
     String nameRef;
+    @ManyToMany(mappedBy = "keywords")
+    List<Card> associatedCards;
 
     public Keyword(String description, String name, String nameRef) {
         this.description = description;
