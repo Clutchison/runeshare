@@ -21,14 +21,14 @@ public class Card implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     Long id;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "ASSOCIATED_CARD_ASSOCIATED_WITH_CARDS",
             joinColumns = @JoinColumn(name = "card1_id"),
             inverseJoinColumns = @JoinColumn(name = "card2_id")
     )
     Set<Card> associatedCards;
-    @ManyToMany(mappedBy = "associatedCards", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "associatedCards", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Set<Card> associatedWithCards;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assets_id", referencedColumnName = "id")
@@ -58,7 +58,7 @@ public class Card implements Serializable {
     String name;
     @Column(name = "cardCode", unique = true, nullable = false)
     String cardCode;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "CARD_KEYWORD",
             joinColumns = @JoinColumn(name = "CARD_id"),
