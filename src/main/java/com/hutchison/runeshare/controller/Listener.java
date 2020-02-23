@@ -67,9 +67,9 @@ public class Listener extends ListenerAdapter implements EventListener {
         }
 
         if (returnObj instanceof String)
-            log.debug("Returning String: " + event.getChannel().sendMessage((String) returnObj));
+            event.getChannel().sendMessage((String) returnObj).queue();
         if (returnObj instanceof File)
-            log.debug("Returning File: " + event.getChannel().sendFile((File) returnObj));
+            event.getChannel().sendFile((File) returnObj).queue();
 
         throw new RuntimeException("Returned object from method not String or File: " + returnObj.toString());
     }

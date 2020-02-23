@@ -6,7 +6,6 @@ import com.hutchison.runeshare.model.entity.Region;
 import com.hutchison.runeshare.model.entity.SpellSpeed;
 import com.hutchison.runeshare.model.entity.card.Card;
 import com.hutchison.runeshare.model.entity.card.CardFactory;
-import com.hutchison.runeshare.persistence.repository.*;
 import com.hutchison.runeshare.repository.*;
 import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +58,8 @@ public class DBLoader {
 
     public void load() {
         repositories.forEach(JpaRepository::deleteAllInBatch);
-        CoreInput coreInput = JsonReader.readCoreInput();
-        SetInput setInput = JsonReader.readSetInput();
+        com.hutchison.runeshare.util.json.CoreInput coreInput = com.hutchison.runeshare.util.json.JsonReader.readCoreInput();
+        com.hutchison.runeshare.util.json.SetInput setInput = com.hutchison.runeshare.util.json.JsonReader.readSetInput();
         keywordRepository.saveAll(coreInput.getKeywords().stream()
                 .map(Keyword::fromDto)
                 .collect(Collectors.toList()));
