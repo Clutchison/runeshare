@@ -1,4 +1,4 @@
-package com.hutchison.runeshare.annotation;
+package com.hutchison.runeshare.controller.route;
 
 import org.springframework.stereotype.Indexed;
 
@@ -13,5 +13,5 @@ public @interface Route {
 
     String startsWith() default "";
 
-    String regex() default "";
+    String matches() default "";
 }

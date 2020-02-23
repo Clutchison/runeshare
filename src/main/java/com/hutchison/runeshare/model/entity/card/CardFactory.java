@@ -3,6 +3,7 @@ package com.hutchison.runeshare.model.entity.card;
 import com.hutchison.runeshare.model.dto.CardDto;
 import com.hutchison.runeshare.model.entity.*;
 import com.hutchison.runeshare.persistence.repository.*;
+import com.hutchison.runeshare.repository.*;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

@@ -1,56 +1,77 @@
 package com.hutchison.runeshare.controller;
 
-import com.hutchison.runeshare.annotation.Route;
-import com.hutchison.runeshare.persistence.repository.CardRepository;
+import com.hutchison.runeshare.controller.route.Route;
+import com.hutchison.runeshare.controller.route.RouteMapping;
+import com.hutchison.runeshare.repository.CardRepository;
 import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.LoginException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class Listener extends ListenerAdapter implements EventListener {
 
     private final CardRepository cardRepository;
+    private final List<RouteMapping> routeMappings;
+    private final RuneshareController runeshareController;
 
     @Autowired
-    Listener(CardRepository cardRepository) {
+    Listener(CardRepository cardRepository,
+             RuneshareController runeshareController) {
         this.cardRepository = cardRepository;
+        this.runeshareController = runeshareController;
+        this.routeMappings = Arrays.stream(runeshareController.getClass().getMethods())
+                .filter(method -> method.getAnnotation(Route.class) != null)
+                .map(RouteMapping::new)
+                .collect(Collectors.toList());
     }
 
     public void listen() throws LoginException {
         JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
         jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XjjzVA.msOoJWmdqZpm0Jg26dB74cFQi0M");
-        jdaBuilder.addEventListeners(new Listener(cardRepository));
+        jdaBuilder.addEventListeners(new Listener(cardRepository, runeshareController));
         jdaBuilder.build();
     }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
-        Set<Method> methodsAnnotatedWith = new Reflections("com.hutchison.runeshare.routing", new MethodAnnotationsScanner()).getMethodsAnnotatedWith(Route.class);
-        Map<Method, Annotation> methodMap = methodsAnnotatedWith.stream()
-                .collect(Collectors.toMap(
-                        method -> method,
-                        method -> Arrays.stream(method.getDeclaredAnnotations())
-                                .filter(annotation -> annotation instanceof Route)
-                                .findFirst()
-                                .orElseThrow(() -> new RuntimeException("Failed to find route annotation"))
-                ));
-        System.out.println("Welp");
+        String contentRaw = event.getMessage().getContentRaw();
+        log.debug("Received " + contentRaw);
+        routeMappings.stream()
+                .filter(mapping -> mapping.check(contentRaw))
+                .findFirst()
+                .ifPresent(value -> send(event, contentRaw, value));
+    }
+
+    private void send(MessageReceivedEvent event, String contentRaw, RouteMapping value) {
+        Object returnObj;
+        try {
+            returnObj = value.getMethod().invoke(runeshareController, contentRaw);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to invoke method: " + value.getMethod());
+        }
+
+        if (returnObj instanceof String)
+            log.debug("Returning String: " + event.getChannel().sendMessage((String) returnObj));
+        if (returnObj instanceof File)
+            log.debug("Returning File: " + event.getChannel().sendFile((File) returnObj));
+
+        throw new RuntimeException("Returned object from method not String or File: " + returnObj.toString());
     }
 
     @Component

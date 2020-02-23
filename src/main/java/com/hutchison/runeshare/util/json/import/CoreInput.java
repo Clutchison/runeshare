@@ -1,9 +1,5 @@
 package com.hutchison.runeshare.util.json;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.hutchison.runeshare.model.dto.KeywordDto;
 import com.hutchison.runeshare.model.dto.RarityDto;
@@ -12,7 +8,6 @@ import com.hutchison.runeshare.model.dto.SpellSpeedDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.io.IOException;
 import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;

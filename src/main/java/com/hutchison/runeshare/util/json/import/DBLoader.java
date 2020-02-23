@@ -7,6 +7,7 @@ import com.hutchison.runeshare.model.entity.SpellSpeed;
 import com.hutchison.runeshare.model.entity.card.Card;
 import com.hutchison.runeshare.model.entity.card.CardFactory;
 import com.hutchison.runeshare.persistence.repository.*;
+import com.hutchison.runeshare.repository.*;
 import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
