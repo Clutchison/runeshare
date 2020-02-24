@@ -3,8 +3,11 @@ package com.hutchison.runeshare.model.entity.card;
 import com.hutchison.runeshare.model.entity.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.persistence.*;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -124,5 +127,14 @@ public class Card implements Serializable {
         this.supertype = supertype;
         this.type = type;
         this.collectible = collectible;
+    }
+
+    public File getCardImage() {
+        try {
+            return new ClassPathResource("datadragon/datadragon-set1-en_us/en_us/img/cards/" + this.getCardCode() + ".png").getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to retrieve card image.");
+        }
     }
 }

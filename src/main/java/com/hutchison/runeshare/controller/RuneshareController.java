@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,13 +28,12 @@ public class RuneshareController {
         List<String> splitInput = Arrays.asList(input.split(" "));
         if (splitInput.size() != 2) return "Bad input, format example: !deck DECKCODE";
         String s = service.parseDeck(splitInput.get(1));
-        return "";
+        return s;
     }
 
     @Route(matches = "\\[.*\\]")
-    public String getCardImage(String input) {
-        String s = "getCardImage called!";
-        log.debug(s);
-        return s;
+    public File getCardImage(String input) {
+        String cardName = input.substring(input.indexOf('[') + 1, input.indexOf(']'));
+        return service.getCardImage(cardName);
     }
 }

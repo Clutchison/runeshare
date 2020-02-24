@@ -4,6 +4,7 @@ import com.hutchison.runeshare.model.entity.card.Card;
 import com.hutchison.runeshare.repository.CardRepository;
 import lombok.Value;
 import no.stelar7.lor.types.LoRDeck;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +34,13 @@ public class RuneshareDeck {
         Map<Integer, List<Map.Entry<Card, Integer>>> manaCostCardMap = cards.entrySet().stream()
                 .collect(Collectors.groupingBy(es -> es.getKey().getCost()));
         return manaCostCardMap.entrySet().stream()
-                .map(cmcList -> cmcList.getKey() + "\n" + getAlphaString(cmcList.getValue()))
-                .collect(Collectors.joining("\n\n"));
+                .map(cmcList -> generateCmcHeader(cmcList) + getAlphaString(cmcList.getValue()))
+                .collect(Collectors.joining("\n"));
+    }
+
+    @NotNull
+    private String generateCmcHeader(Map.Entry<Integer, List<Map.Entry<Card, Integer>>> cmcList) {
+        return "**__     " + cmcList.getKey() + "     __**\n";
     }
 
     private String getAlphaString(List<Map.Entry<Card, Integer>> value) {
@@ -46,7 +52,7 @@ public class RuneshareDeck {
     }
 
     private String getAlphaString(Map<Card, Integer> map) {
-        return cards.entrySet().stream()
+        return map.entrySet().stream()
                 .sorted(Comparator.comparing(es -> es.getKey().getName()))
                 .map(es -> es.getValue() + "x " + es.getKey().getName())
                 .collect(Collectors.joining("\n"));

@@ -27,15 +27,15 @@ public class CoreInput {
     @JsonDeserialize(using = SpellSpeedDeserializer.class)
     List<SpellSpeedDto> spellSpeeds;
 
-    private static class KeywordDeserializer extends ListDeserializer<KeywordDeserializer> {
+    private static class KeywordDeserializer extends com.hutchison.runeshare.util.json.ListDeserializer<KeywordDeserializer> {
     }
 
-    private static class RarityDeserializer extends ListDeserializer<RarityDto> {
+    private static class RarityDeserializer extends com.hutchison.runeshare.util.json.ListDeserializer<RarityDto> {
     }
 
-    private static class RegionDeserializer extends ListDeserializer<RegionDto> {
+    private static class RegionDeserializer extends com.hutchison.runeshare.util.json.ListDeserializer<RegionDto> {
     }
 
-    private static class SpellSpeedDeserializer extends ListDeserializer<SpellSpeedDto> {
+    private static class SpellSpeedDeserializer extends com.hutchison.runeshare.util.json.ListDeserializer<SpellSpeedDto> {
     }
 }
