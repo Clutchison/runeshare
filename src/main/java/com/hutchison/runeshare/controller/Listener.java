@@ -41,7 +41,7 @@ public class Listener extends ListenerAdapter implements EventListener {
 
     public void listen() throws LoginException {
         JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
-        jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XlLpOg.dKnbjyH0PYTvzbP9TQM1aMYsOl0");
+        jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XlMZtQ.9hBPZvCTHKPr7P04Mc9Hh8ueJc4");
         jdaBuilder.addEventListeners(new Listener(cardRepository, runeshareController));
         jdaBuilder.build();
     }
@@ -68,10 +68,10 @@ public class Listener extends ListenerAdapter implements EventListener {
 
         if (returnObj instanceof String)
             event.getChannel().sendMessage((String) returnObj).queue();
-        if (returnObj instanceof File)
+        else if (returnObj instanceof File)
             event.getChannel().sendFile((File) returnObj).queue();
-
-        throw new RuntimeException("Returned object from method not String or File: " + returnObj.toString());
+        else
+            throw new RuntimeException("Returned object from method not String or File: " + returnObj.toString());
     }
 
     @Component

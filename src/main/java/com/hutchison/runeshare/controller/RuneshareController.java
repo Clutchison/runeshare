@@ -31,7 +31,7 @@ public class RuneshareController {
         return s;
     }
 
-    @Route(matches = "\\[.*\\]")
+    @Route(matches = ".*\\[.*\\].*")
     public File getCardImage(String input) {
         String cardName = input.substring(input.indexOf('[') + 1, input.indexOf(']'));
         return service.getCardImage(cardName);

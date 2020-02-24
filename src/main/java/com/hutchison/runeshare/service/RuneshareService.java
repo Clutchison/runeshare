@@ -33,7 +33,10 @@ public class RuneshareService {
     }
 
     public File getCardImage(String cardName) {
-        Card byName = cardRepository.findByName(cardName);
-        return byName.getCardImage();
+        return cardRepository.findByName(cardName).stream()
+                .filter(Card::getCollectible)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No cards found that are collectible."))
+                .getCardImage();
     }
 }

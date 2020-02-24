@@ -1,5 +1,6 @@
 package com.hutchison.runeshare.util.json;
 
+import com.hutchison.runeshare.model.dto.CardDto;
 import com.hutchison.runeshare.model.entity.Keyword;
 import com.hutchison.runeshare.model.entity.Rarity;
 import com.hutchison.runeshare.model.entity.Region;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Value
@@ -62,19 +65,33 @@ public class DBLoader {
         com.hutchison.runeshare.util.json.SetInput setInput = com.hutchison.runeshare.util.json.JsonReader.readSetInput();
         keywordRepository.saveAll(coreInput.getKeywords().stream()
                 .map(Keyword::fromDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         rarityRepository.saveAll(coreInput.getRarities().stream()
                 .map(Rarity::fromDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         regionRepository.saveAll(coreInput.getRegions().stream()
                 .map(Region::fromDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         spellSpeedRepository.saveAll(coreInput.getSpellSpeeds().stream()
                 .map(SpellSpeed::fromDto)
-                .collect(Collectors.toList()));
-        List<Card> collect = setInput.getCards().stream()
-                .map(cardFactory::fromDto)
-                .collect(Collectors.toList());
-        cardRepository.saveAll(collect);
+                .collect(Collectors.toSet()));
+        cardRepository.saveAll(loadCards(setInput));
+    }
+
+    private Set<Card> loadCards(SetInput setInput) {
+        // Create Cards first without associated cards populated.
+        Map<CardDto, Card> cardDtoCardMap = setInput.getCards().stream()
+                .collect(Collectors.toMap(
+                        dto -> dto,
+                        cardFactory::fromDto
+                ));
+        // Populate associated cards after first pass.
+        return cardDtoCardMap.entrySet().stream()
+                .peek(es -> es.getValue().setAssociatedCards(
+                        cardDtoCardMap.values().stream()
+                                .filter(card -> es.getKey().getAssociatedCardRefs().contains(card.getCardCode()))
+                                .collect(Collectors.toSet())))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toSet());
     }
 }
