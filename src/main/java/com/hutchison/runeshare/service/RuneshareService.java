@@ -39,4 +39,12 @@ public class RuneshareService {
                 .orElseThrow(() -> new RuntimeException("No cards found that are collectible."))
                 .getCardImage();
     }
+
+    public File getArt(String cardName) {
+        return cardRepository.findByName(cardName).stream()
+                .filter(Card::getCollectible)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No cards found that are collectible"))
+                .getCardArt();
+    }
 }

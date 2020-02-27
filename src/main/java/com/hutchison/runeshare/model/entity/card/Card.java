@@ -20,6 +20,8 @@ import java.util.Set;
 @Table(name = "CARD")
 @Builder
 public class Card implements Serializable {
+    static final String CARD_IMAGE_LOCATION = "datadragon/datadragon-set1-en_us/en_us/img/cards/";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
@@ -131,10 +133,19 @@ public class Card implements Serializable {
 
     public File getCardImage() {
         try {
-            return new ClassPathResource("datadragon/datadragon-set1-en_us/en_us/img/cards/" + this.getCardCode() + ".png").getFile();
+            return new ClassPathResource(CARD_IMAGE_LOCATION + this.getCardCode() + ".png").getFile();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to retrieve card image.");
+        }
+    }
+
+    public File getCardArt() {
+        try {
+            return new ClassPathResource(CARD_IMAGE_LOCATION + this.getCardCode() + "-full.png").getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to retrieve card art.");
         }
     }
 }

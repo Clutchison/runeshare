@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -36,4 +37,15 @@ public class RuneshareController {
         String cardName = input.substring(input.indexOf('[') + 1, input.indexOf(']'));
         return service.getCardImage(cardName);
     }
+
+    @Route(startsWith = "!art")
+    public Object getArt(String input) {
+        List<String> splitInput = Arrays.asList(input.split(" "));
+        if (splitInput.size() <= 1) return "Bad input, format example: !art CARDNAME";
+        String cardName = splitInput.stream()
+                .filter(s -> splitInput.indexOf(s) != 0)
+                .collect(Collectors.joining(" "));
+        return service.getArt(cardName);
+    }
+
 }
