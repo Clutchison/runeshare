@@ -41,7 +41,6 @@ public class Listener extends ListenerAdapter implements EventListener {
 
     public void listen() throws LoginException {
         JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
-        jdaBuilder.setToken("Njc0MDAyNzE4NDMxNjQxNjYx.XlMZtQ.9hBPZvCTHKPr7P04Mc9Hh8ueJc4");
         jdaBuilder.addEventListeners(new Listener(cardRepository, runeshareController));
         jdaBuilder.build();
     }
