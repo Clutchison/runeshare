@@ -3,7 +3,7 @@ package com.hutchison.runeshare.controller;
 import com.hutchison.runeshare.controller.route.Route;
 import com.hutchison.runeshare.controller.route.RouteMapping;
 import com.hutchison.runeshare.repository.CardRepository;
-import lombok.Value;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.LoginException;
@@ -28,6 +29,9 @@ public class Listener extends ListenerAdapter implements EventListener {
     private final List<RouteMapping> routeMappings;
     private final RuneshareController runeshareController;
 
+    @Value( "${discord.token}" )
+    private String token;
+
     @Autowired
     Listener(CardRepository cardRepository,
              RuneshareController runeshareController) {
@@ -41,6 +45,7 @@ public class Listener extends ListenerAdapter implements EventListener {
 
     public void listen() throws LoginException {
         JDABuilder jdaBuilder = new JDABuilder(AccountType.BOT);
+        jdaBuilder.setToken(token);
         jdaBuilder.addEventListeners(new Listener(cardRepository, runeshareController));
         jdaBuilder.build();
     }
@@ -74,7 +79,7 @@ public class Listener extends ListenerAdapter implements EventListener {
     }
 
     @Component
-    @Value
+    @Data
     static class ListenerInit {
         Listener listener;
 
