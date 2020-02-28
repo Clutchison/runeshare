@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.hutchison.runeshare.service.deck.ParseFormat.CMC;
 
@@ -46,5 +48,11 @@ public class RuneshareService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No cards found that are collectible"))
                 .getCardArt();
+    }
+
+    public List<File> getCardImages(String cardName) {
+        return cardRepository.findByName(cardName).stream()
+                .map(Card::getCardImage)
+                .collect(Collectors.toList());
     }
 }

@@ -12,8 +12,9 @@ import java.io.Serializable;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 
 @Entity

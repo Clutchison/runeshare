@@ -40,12 +40,20 @@ public class RuneshareController {
 
     @Route(startsWith = "!art")
     public Object getArt(String input) {
+        return service.getArt(getCardName(input));
+    }
+
+    @Route(startsWith = "!card")
+    public List<File> getCard(String input) {
+        return service.getCardImages(getCardName(input));
+    }
+
+    private String getCardName(String input) {
         List<String> splitInput = Arrays.asList(input.split(" "));
-        if (splitInput.size() <= 1) return "Bad input, format example: !art CARDNAME";
-        String cardName = splitInput.stream()
+        if (splitInput.size() <= 1) throw new RuntimeException("Bad input");
+        return splitInput.stream()
                 .filter(s -> splitInput.indexOf(s) != 0)
                 .collect(Collectors.joining(" "));
-        return service.getArt(cardName);
     }
 
 }

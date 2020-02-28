@@ -66,15 +66,19 @@ public class DBLoader {
         keywordRepository.saveAll(coreInput.getKeywords().stream()
                 .map(Keyword::fromDto)
                 .collect(Collectors.toSet()));
+        keywordRepository.flush();
         rarityRepository.saveAll(coreInput.getRarities().stream()
                 .map(Rarity::fromDto)
                 .collect(Collectors.toSet()));
+        rarityRepository.flush();
         regionRepository.saveAll(coreInput.getRegions().stream()
                 .map(Region::fromDto)
                 .collect(Collectors.toSet()));
+        regionRepository.flush();
         spellSpeedRepository.saveAll(coreInput.getSpellSpeeds().stream()
                 .map(SpellSpeed::fromDto)
                 .collect(Collectors.toSet()));
+        spellSpeedRepository.flush();
         cardRepository.saveAll(loadCards(setInput));
     }
 
@@ -83,7 +87,11 @@ public class DBLoader {
         Map<CardDto, Card> cardDtoCardMap = setInput.getCards().stream()
                 .collect(Collectors.toMap(
                         dto -> dto,
-                        cardFactory::fromDto
+                        dto -> {
+                            Card presave = cardFactory.fromDto(dto);
+                            cardRepository.saveAndFlush(presave);
+                            return cardRepository.findByCardCode(dto.getCardCode());
+                        }
                 ));
         // Populate associated cards after first pass.
         return cardDtoCardMap.entrySet().stream()
